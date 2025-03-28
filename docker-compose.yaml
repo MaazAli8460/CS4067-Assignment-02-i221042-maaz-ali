@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  user-service:
+    build: ./UserService
+    ports:
+      - "3001:3000"
+    environment:
+      - DATABASE_URL=mongodb://db:27017/users
+    depends_on:
+      - db
+
+  event-service:
+    build: ./EventService
+    ports:
+      - "3002:3000"
+    environment:
+      - DATABASE_URL=mongodb://db:27017/events
+    depends_on:
+      - db
+  booking-service:
+    build: ./BookingService
+    ports:
+    - "3003:3000"
+    environment:
+    - DATABASE_URL=mongodb://db:27017/booking
+    depends_on:
+    - db
+  notification-service:
+    build: ./NotificationService
+    ports:
+    - "3004:3000"
+    environment:
+    - DATABASE_URL=mongodb://db:27017/notifications
+    depends_on:
+    - db
+  db:
+    image: mongodb:10
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: users
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

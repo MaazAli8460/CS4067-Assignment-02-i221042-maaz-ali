@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: onlineeventbooking-maaz
+data:
+  USER_DB_URL: mongodb://mongo:27017/users
+  EVENT_DB_URL: mongodb://mongo:27017/events
+  BOOKING_DB_URL: mongodb://mongo:27017/booking
+  NOTIFICATION_DB_URL: mongodb://mongo:27017/notifications
+  RABBITMQ_URL: amqp://rabbitmq

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: onlineeventbooking-maaz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: maaz/notification-service:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: mongodb://mongo:27017/notifications
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: onlineeventbooking-maaz
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
